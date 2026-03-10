@@ -9,19 +9,13 @@ def bars():
     """Create a stacked bar chart of fruit quantities for Farrah, Fred, and Felicia."""
     np.random.seed(5)
     fruit = np.random.randint(0, 20, (4, 3))
-    plt.figure(figsize=(6.4, 4.8))
+    plt.figure(figsize=(6.4, 4.8), dpi=100)
 
-    # Names of people (x-axis)
     people = ["Farrah", "Fred", "Felicia"]
-
-    # Colors for each fruit
-    colors = ["red", "yellow", "#ff8000", "#ffe5b4"]  # apples, bananas, oranges, peaches
+    colors = ["red", "yellow", "#ff8000", "#ffe5b4"]
     labels = ["Apples", "Bananas", "Oranges", "Peaches"]
 
-    # Bottom array for stacking
     bottom = np.zeros(3)
-
-    # Plot each row of fruit as a stacked bar
     for i in range(fruit.shape[0]):
         plt.bar(
             people,
@@ -31,7 +25,7 @@ def bars():
             width=0.5,
             label=labels[i]
         )
-        bottom += fruit[i]  # update bottom for next layer
+        bottom += fruit[i]
 
     plt.ylabel("Quantity of Fruit")
     plt.ylim(0, 80)
