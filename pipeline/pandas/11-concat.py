@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Module that concatenates two DataFrames with keys and indexed on Timestamp"""
 
+import pandas as pd
 index = __import__("10-index").index
 
 def concat(df1, df2):
