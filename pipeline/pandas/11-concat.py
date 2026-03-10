@@ -2,7 +2,7 @@
 """Module that concatenates two DataFrames with keys and indexed on Timestamp"""
 
 import pandas as pd
-index = __import__("10-index").index
+index = __import__('10-index').index
 
 def concat(df1, df2):
     """Concatenate df2 rows up to timestamp 1417411920 above df1
@@ -22,6 +22,6 @@ def concat(df1, df2):
     df2 = df2.loc[:1417411920]
 
     # Concatenate df2 on top of df1 with keys
-    df_concat = pd.concat([df2, df1], keys=["bitstamp", "coinbase"])
+    df_concat = pd.concat([df2, df1], keys=['bitstamp', 'coinbase'])
 
     return df_concat
