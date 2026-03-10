@@ -1,19 +1,23 @@
 #!/usr/bin/env python3
-"""Module that concatenates two DataFrames with a MultiIndex, with Timestamp first"""
+"""Module that concatenates two DataFrames with a MultiIndex, 
+with Timestamp first."""
 
 import pandas as pd
 index = __import__('10-index').index
 
+
 def hierarchy(df1, df2):
-    """Concatenate bitstamp and coinbase DataFrames with Timestamp as first index level
-       for timestamps 1417411980 to 1417417980, inclusive.
+    """Concatenate bitstamp and coinbase DataFrames with Timestamp 
+    as first index level for timestamps 1417411980 to 1417417980, 
+    inclusive.
 
     Args:
         df1: pandas DataFrame (coinbase)
         df2: pandas DataFrame (bitstamp)
 
     Returns:
-        pandas.DataFrame: concatenated DataFrame with MultiIndex [Timestamp, source]
+        pandas.DataFrame: concatenated DataFrame with MultiIndex 
+        [Timestamp, source]
     """
     # Index both DataFrames on Timestamp
     df1 = index(df1)
