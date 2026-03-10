@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
+"""Module that creates a pandas DataFrame from a NumPy array"""
+
 import pandas as pd
 
 
 def from_numpy(array):
-    """
-    function to create a dataframe
+    """Create a pandas DataFrame from a NumPy ndarray
+
     Args:
-        array: np.ndarray from which you should create the pd.DataFrame
-    Returns: newly created pd.DataFrame
+        array (numpy.ndarray): array to convert
+
+    Returns:
+        pandas.DataFrame: DataFrame with alphabetically labeled columns
     """
-    c_list = list('ABCDEFGH')
-    reshape = c_list[:array.shape[1]]
-    return pd.DataFrame(array, columns=reshape)
+    columns = [chr(65 + i) for i in range(array.shape[1])]
+    return pd.DataFrame(array, columns=columns)
