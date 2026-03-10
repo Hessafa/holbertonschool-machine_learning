@@ -16,21 +16,18 @@ def change_scale():
     # Create figure
     plt.figure(figsize=(6.4, 4.8))
 
-    # Plot line
-    plt.plot(x, y, color='b')  # Blue line
+    # Plot line (default style matches reference)
+    plt.plot(x, y)
 
     # Set x and y labels
-    plt.xlabel('Time (years)')
-    plt.ylabel('Fraction Remaining')
+    plt.xlabel("Time (years)")
+    plt.ylabel("Fraction Remaining")
 
     # Set title
-    plt.title('Exponential Decay of C-14')
+    plt.title("Exponential Decay of C-14")
 
-    # Set y-axis to logarithmic scale
-    plt.yscale('log')
+    # Logarithmic y-axis
+    plt.yscale("log")
 
     # Set x-axis limits
     plt.xlim(0, 28650)
-
-    # Show plot
-    plt.show()
