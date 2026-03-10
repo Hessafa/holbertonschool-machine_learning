@@ -14,14 +14,14 @@ def concat(df1, df2):
     Returns:
         pandas.DataFrame: concatenated DataFrame with keys
     """
-    # 1️⃣ Index both DataFrames on Timestamp
+    # Index both DataFrames on Timestamp
     df1 = index(df1)
     df2 = index(df2)
 
-    # 2️⃣ Select rows from df2 up to timestamp 1417411920
+    # Select rows from df2 up to timestamp 1417411920
     df2 = df2.loc[:1417411920]
 
-    # 3️⃣ Concatenate df2 on top of df1 with keys
+    # Concatenate df2 on top of df1 with keys
     df_concat = pd.concat([df2, df1], keys=["bitstamp", "coinbase"])
 
     return df_concat
