@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Module that computes descriptive statistics of a DataFrame."""
 
-import pandas as pd
-
 
 def analyze(df):
     """Compute descriptive statistics for all columns except Timestamp.
