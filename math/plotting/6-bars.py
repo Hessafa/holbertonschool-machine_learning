@@ -1,1 +1,41 @@
+#!/usr/bin/env python3
+"""Plot a stacked bar graph for fruit quantities per person."""
 
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def bars():
+    """Create a stacked bar chart of fruit quantities for Farrah, Fred, and Felicia."""
+    np.random.seed(5)
+    fruit = np.random.randint(0, 20, (4, 3))
+    plt.figure(figsize=(6.4, 4.8))
+
+    # Names of people (x-axis)
+    people = ["Farrah", "Fred", "Felicia"]
+
+    # Colors for each fruit
+    colors = ["red", "yellow", "#ff8000", "#ffe5b4"]  # apples, bananas, oranges, peaches
+    labels = ["Apples", "Bananas", "Oranges", "Peaches"]
+
+    # Bottom array for stacking
+    bottom = np.zeros(3)
+
+    # Plot each row of fruit as a stacked bar
+    for i in range(fruit.shape[0]):
+        plt.bar(
+            people,
+            fruit[i],
+            bottom=bottom,
+            color=colors[i],
+            width=0.5,
+            label=labels[i]
+        )
+        bottom += fruit[i]  # update bottom for next layer
+
+    plt.ylabel("Quantity of Fruit")
+    plt.ylim(0, 80)
+    plt.yticks(np.arange(0, 81, 10))
+    plt.title("Number of Fruit per Person")
+    plt.legend()
+    plt.show()
