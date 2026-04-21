@@ -7,7 +7,6 @@ home planets of all sentient species using SWAPI.
 import requests
 import urllib3
 
-# Disable SSL warnings (required for checker environment)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -26,18 +25,15 @@ def sentientPlanets():
             classification = species.get("classification", "").lower()
             designation = species.get("designation", "").lower()
 
-            # Check if species is sentient
             if "sentient" in classification or "sentient" in designation:
                 homeworld_url = species.get("homeworld")
 
+                # ✅ ONLY process if homeworld exists
                 if homeworld_url:
                     home_response = requests.get(homeworld_url, verify=False)
                     home_data = home_response.json()
                     planets.append(home_data.get("name"))
-                else:
-                    planets.append("unknown")
 
-        # Pagination
         url = data.get("next")
 
     return planets
