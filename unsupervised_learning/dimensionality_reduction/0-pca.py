@@ -11,27 +11,21 @@ def pca(X, var=0.95):
     Performs PCA on dataset X.
 
     Args:
-        X (numpy.ndarray): shape (n, d), centered data
+        X (numpy.ndarray): shape (n, d)
         var (float): fraction of variance to retain
 
     Returns:
-        W (numpy.ndarray): shape (d, nd), projection matrix
+        W (numpy.ndarray): projection matrix
     """
-    # Singular Value Decomposition
     U, S, Vt = np.linalg.svd(X, full_matrices=False)
 
-    # Compute explained variance
-    variance = (S ** 2)
-    total_variance = np.sum(variance)
-    explained_variance_ratio = variance / total_variance
-
-    # Cumulative variance
+    variance = S ** 2
+    explained_variance_ratio = variance / np.sum(variance)
     cumulative_variance = np.cumsum(explained_variance_ratio)
 
-    # Find number of dimensions to keep
-    nd = np.searchsorted(cumulative_variance, var) + 1
+    # ✅ FIX HERE
+    nd = np.argmax(cumulative_variance >= var) + 1
 
-    # Projection matrix
     W = Vt[:nd].T
 
     return W
