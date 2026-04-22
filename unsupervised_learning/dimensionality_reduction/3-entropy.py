@@ -21,14 +21,19 @@ def HP(Di, beta):
     # Compute unnormalized probabilities
     P = np.exp(-Di * beta)
 
-    # Sum of probabilities
     sum_P = np.sum(P)
 
     # Avoid division by zero
     if sum_P == 0:
-        Pi = np.zeros_like(P)
-        Hi = 0
-        return Hi, Pi
+        return 0, np.zeros_like(P)
+
+    # Normalize
+    Pi = P / sum_P
+
+    # ✅ Correct Shannon entropy
+    Hi = -np.sum(Pi * np.log2(Pi + 1e-10))
+
+    return Hi, Pi
 
     # Normalize
     Pi = P / sum_P
