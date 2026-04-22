@@ -8,10 +8,20 @@ import numpy as np
 
 class Neuron:
     """
-    Neuron class
+    Neuron class for binary classification
     """
 
     def __init__(self, nx):
+        """
+        Initialize the neuron
+
+        Args:
+            nx (int): number of input features
+
+        Raises:
+            TypeError: nx must be a integer
+            ValueError: nx must be positive
+        """
         if not isinstance(nx, int):
             raise TypeError("nx must be a integer")
         if nx < 1:
@@ -23,31 +33,43 @@ class Neuron:
 
     @property
     def W(self):
+        """Weights vector"""
         return self.__W
 
     @property
     def b(self):
+        """Bias"""
         return self.__b
 
     @property
     def A(self):
+        """Activated output"""
         return self.__A
 
     def forward_prop(self, X):
+        """
+        Calculates forward propagation of the neuron
+
+        Args:
+            X (numpy.ndarray): shape (nx, m) input data
+
+        Returns:
+            numpy.ndarray: activated output (A)
+        """
         Z = np.matmul(self.__W, X) + self.__b
         self.__A = 1 / (1 + np.exp(-Z))
         return self.__A
 
     def cost(self, Y, A):
         """
-        Computes logistic regression cost
+        Calculates logistic regression cost
 
         Args:
             Y (numpy.ndarray): correct labels (1, m)
             A (numpy.ndarray): activated output (1, m)
 
         Returns:
-            cost (float)
+            float: cost of the model
         """
         m = Y.shape[1]
 
