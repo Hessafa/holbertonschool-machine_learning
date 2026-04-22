@@ -23,8 +23,8 @@ def pca(X, var=0.95):
     explained_variance_ratio = variance / np.sum(variance)
     cumulative_variance = np.cumsum(explained_variance_ratio)
 
-    # ✅ FIX HERE
-    nd = np.argmax(cumulative_variance >= var) + 1
+    # ✅ ROBUST FIX
+    nd = np.sum(cumulative_variance < var) + 1
 
     W = Vt[:nd].T
 
