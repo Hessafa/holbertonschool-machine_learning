@@ -1,117 +1,73 @@
 #!/usr/bin/env python3
 """
-Neuron class for binary classification
+NeuralNetwork class for binary classification
 """
 
 import numpy as np
 
 
-class Neuron:
+class NeuralNetwork:
     """
-    Defines a single neuron performing binary classification
+    One hidden layer neural network
     """
 
-    def __init__(self, nx):
-        """Initialize a neuron"""
+    def __init__(self, nx, nodes):
+        """Initialize Neural Network"""
         if not isinstance(nx, int):
             raise TypeError("nx must be an integer")
         if nx < 1:
             raise ValueError("nx must be a positive integer")
 
-        self.__W = np.random.randn(1, nx)
-        self.__b = 0
-        self.__A = 0
+        if not isinstance(nodes, int):
+            raise TypeError("nodes must be an integer")
+        if nodes < 1:
+            raise ValueError("nodes must be a positive integer")
+
+        self.__W1 = np.random.randn(nodes, nx)
+        self.__b1 = np.zeros((nodes, 1))
+        self.__A1 = 0
+
+        self.__W2 = np.random.randn(1, nodes)
+        self.__b2 = 0
+        self.__A2 = 0
 
     @property
-    def W(self):
-        """Weights of the neuron"""
-        return self.__W
+    def W1(self):
+        """Weights hidden layer"""
+        return self.__W1
 
     @property
-    def b(self):
-        """Bias of the neuron"""
-        return self.__b
+    def b1(self):
+        """Bias hidden layer"""
+        return self.__b1
 
     @property
-    def A(self):
-        """Activated output"""
-        return self.__A
+    def A1(self):
+        """Activation hidden layer"""
+        return self.__A1
+
+    @property
+    def W2(self):
+        """Weights output layer"""
+        return self.__W2
+
+    @property
+    def b2(self):
+        """Bias output layer"""
+        return self.__b2
+
+    @property
+    def A2(self):
+        """Activation output layer"""
+        return self.__A2
 
     def forward_prop(self, X):
-        """
-        Performs forward propagation
+        """Forward propagation"""
 
-        Args:
-            X: input data (nx, m)
+        Z1 = np.matmul(self.__W1, X) + self.__b1
+        self.__A1 = 1 / (1 + np.exp(-Z1))
 
-        Returns:
-            Activated output A
-        """
-        Z = np.matmul(self.__W, X) + self.__b
-        self.__A = 1 / (1 + np.exp(-Z))
-        return self.__A
+        Z2 = np.matmul(self.__W2, self.__A1) + self.__b2
+        self.__A2 = 1 / (1 + np.exp(-Z2))
 
-    def cost(self, Y, A):
-        """
-        Calculates logistic regression cost
-
-        Args:
-            Y: correct labels
-            A: predictions
-
-        Returns:
-            cost
-        """
-        m = Y.shape[1]
-        cost = -(1/m) * np.sum(
-            Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A)
-        )
-        return cost
-
-    def evaluate(self, X, Y):
-        """
-        Evaluates predictions
-
-        Returns:
-            (predictions, cost)
-        """
-        A = self.forward_prop(X)
-        cost = self.cost(Y, A)
-        pred = np.where(A >= 0.5, 1, 0)
-        return pred, cost
-
-    def gradient_descent(self, X, Y, A, alpha=0.05):
-        """
-        Performs one step of gradient descent
-        """
-        m = Y.shape[1]
-
-        dZ = A - Y
-        dW = (1/m) * np.matmul(dZ, X.T)
-        db = (1/m) * np.sum(dZ)
-
-        self.__W = self.__W - alpha * dW
-        self.__b = self.__b - alpha * db
-
-    def train(self, X, Y, iterations=5000, alpha=0.05):
-        """
-        Trains the neuron
-
-        Returns:
-            evaluation after training
-        """
-        if not isinstance(iterations, int):
-            raise TypeError("iterations must be an integer")
-        if iterations <= 0:
-            raise ValueError("iterations must be a positive integer")
-
-        if not isinstance(alpha, float):
-            raise TypeError("alpha must be a float")
-        if alpha <= 0:
-            raise ValueError("alpha must be positive")
-
-        for _ in range(iterations):
-            A = self.forward_prop(X)
-            self.gradient_descent(X, Y, A, alpha)
-
-        return self.evaluate(X, Y)
+        return self.__A1, self.__A2
